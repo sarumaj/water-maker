@@ -4,5 +4,5 @@ import (
 	"embed"
 )
 
-// go:embed images
+//go:embed images/*.png
 var Fs embed.FS

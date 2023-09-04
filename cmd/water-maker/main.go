@@ -20,7 +20,7 @@ import (
 func main() {
 	h := handler.NewHandler()
 
-	myApp := app.NewWithID("com.github.sarumaj.domestic.water-maker")
+	myApp := app.NewWithID("com.github.sarumaj.water-maker")
 	icon, err := data.Fs.ReadFile("images/icon.png")
 	if err != nil {
 		panic(err)
