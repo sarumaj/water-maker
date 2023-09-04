@@ -7,10 +7,11 @@ import (
 	"image/gif"
 	"image/jpeg"
 	"image/png"
+	"io"
+	"io/fs"
 	"math"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/httpsOmkar/graphics-go/graphics"
 	data "github.com/sarumaj/water-maker/pkg/data"
@@ -21,38 +22,61 @@ type File struct {
 }
 
 func (file *File) SetWatermark() {
-	imgb, err := os.Open(file.FullPath)
+	img, err := decodeImage(file.FullPath, nil)
 	if err != nil {
 		panic(err)
+	}
+
+	watermark, err := decodeWatermark()
+	if err != nil {
+		panic(err)
+	}
+
+	file.Base = fmt.Sprintf("%s_watermarked.%s", file.Base, file.Ext)
+	file.FullPath = filepath.Join(file.Dir, file.Base)
+	if err := encodeImage(file.FullPath, drawWatermark(img, watermark)); err != nil {
+		panic(err)
+	}
+}
+
+func decodeImage(path string, fsys fs.FS) (img image.Image, err error) {
+	var imgb io.ReadCloser
+	if fsys == nil {
+		imgb, err = os.Open(path)
+	} else {
+		imgb, err = fsys.Open(path)
+	}
+	if err != nil {
+		return nil, err
 	}
 	defer imgb.Close()
 
-	var img image.Image
-	switch file.Ext {
-	case "png":
+	switch filepath.Ext(path) {
+	case ".png":
 		img, err = png.Decode(imgb)
-	case "jpeg", "jpg":
+	case ".jpeg", ".jpg":
 		img, err = jpeg.Decode(imgb)
-	case "gif":
+	case ".gif":
 		img, err = gif.Decode(imgb)
 	default:
-		return
+		return nil, fmt.Errorf("unsupported image format: %s", path)
 	}
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	wmb, err := data.Fs.Open("images/watermark.png")
-	if err != nil {
-		panic(err)
-	}
-	defer wmb.Close()
+	return img, nil
+}
 
-	watermark, err := png.Decode(wmb)
-	if err != nil {
-		panic(err)
+func decodeWatermark() (wm image.Image, err error) {
+	wmfile := os.Getenv("WATERMARK_FILE")
+	if wmfile != "" {
+		return decodeImage(wmfile, nil)
 	}
+	return decodeImage("images/watermark.png", data.Fs)
+}
 
+func drawWatermark(img, watermark image.Image) image.Image {
 	if s := img.Bounds().Size(); s.Y > s.X {
 		dstImage := image.NewRGBA(image.Rect(0, 0, watermark.Bounds().Dy(), watermark.Bounds().Dx()))
 		graphics.Rotate(dstImage, watermark, &graphics.RotateOptions{Angle: 3.0 * math.Pi / 2.0})
@@ -65,24 +89,26 @@ func (file *File) SetWatermark() {
 	m := image.NewRGBA(img.Bounds())
 	draw.Draw(m, img.Bounds(), img, image.Point{}, draw.Src)
 	draw.Draw(m, watermark.Bounds(), watermark, image.Point{}, draw.Over)
+	return m
+}
 
-	file.Base = strings.Replace(file.Base, "."+file.Ext, "_watermarked."+file.Ext, 1)
-	file.FullPath = filepath.Join(file.Dir, file.Base)
-	imgw, err := os.Create(file.FullPath)
+func encodeImage(path string, img image.Image) error {
+	imgw, err := os.Create(path)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	defer imgw.Close()
 
-	switch file.Ext {
+	switch filepath.Ext(path) {
 	case "jpeg", "jpg":
-		jpeg.Encode(imgw, m, &jpeg.Options{Quality: jpeg.DefaultQuality})
+		jpeg.Encode(imgw, img, &jpeg.Options{Quality: jpeg.DefaultQuality})
 	case "png":
-		encoder := png.Encoder{CompressionLevel: png.BestCompression}
-		encoder.Encode(imgw, m)
+		(&png.Encoder{CompressionLevel: png.BestCompression}).Encode(imgw, img)
 	case "gif":
-		gif.Encode(imgw, m, &gif.Options{NumColors: 256, Quantizer: nil, Drawer: nil})
+		gif.Encode(imgw, img, &gif.Options{NumColors: 256, Quantizer: nil, Drawer: nil})
 	default:
-		panic(fmt.Errorf("unsupported image format"))
+		return fmt.Errorf("unsupported image format")
 	}
+
+	return nil
 }
