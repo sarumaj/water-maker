@@ -13,7 +13,7 @@ import (
 	"strings"
 
 	"github.com/httpsOmkar/graphics-go/graphics"
-	data "github.com/sarumaj/water-maker/data"
+	data "github.com/sarumaj/water-maker/pkg/data"
 )
 
 type File struct {
@@ -42,7 +42,7 @@ func (file *File) SetWatermark() {
 		panic(err)
 	}
 
-	wmb, err := data.Open("images/watermark.png")
+	wmb, err := data.Fs.Open("images/watermark.png")
 	if err != nil {
 		panic(err)
 	}
