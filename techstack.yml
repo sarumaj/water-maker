@@ -1,0 +1,213 @@
+repo_name: sarumaj/water-maker
+report_id: 03eb08f9d70aecac81875aa540f05ff5
+version: 0.1
+repo_type: Public
+timestamp: '2024-03-07T17:31:30+00:00'
+requested_by: sarumaj
+provider: github
+branch: main
+detected_tools_count: 15
+tools:
+- name: Golang
+  description: An open source programming language that makes it easy to build simple,
+    reliable, and efficient software
+  website_url: http://golang.org/
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1005/O6AczwfV_400x400.png
+  detection_source_url: https://github.com/sarumaj/water-maker
+  detection_source: Repo Metadata
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/sarumaj/water-maker
+  detection_source: Repo Metadata
+- name: Testify
+  description: A toolkit with common assertions and mocks that plays nicely with the
+    standard library
+  website_url: https://github.com/stretchr/testify
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Go Testing
+  image_url: https://img.stackshare.io/service/8695/stretchr.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.mod
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:47:29.000000000 Z
+- name: abool
+  description: ":bulb: Atomic Boolean library for cleaner Golang code"
+  package_url: https://pkg.go.dev/github.com/tevino/abool
+  version: 1.2.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:40:57.000000000 Z
+- name: fsnotify
+  description: Cross-platform file system notifications for Go
+  package_url: https://pkg.go.dev/github.com/fsnotify/fsnotify
+  version: 1.4.9
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:47:29.000000000 Z
+- name: gl
+  description: Go bindings for OpenGL
+  package_url: https://pkg.go.dev/github.com/go-gl/gl
+  version: 0.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:40:57.000000000 Z
+- name: go-difflib
+  description: Partial port of Python difflib package to Go
+  package_url: https://pkg.go.dev/github.com/pmezard/go-difflib
+  version: 1.0.0
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:40:57.000000000 Z
+- name: go-spew
+  description: Implements a deep pretty printer for Go data structures to aid in debugging
+  package_url: https://pkg.go.dev/github.com/davecgh/go-spew
+  version: 1.1.0
+  license: ISC
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:40:57.000000000 Z
+- name: gopherjs
+  description: A compiler from Go to JavaScript for running Go code in a browser
+  package_url: https://pkg.go.dev/github.com/gopherjs/gopherjs
+  version: 0.0.0
+  license: BSD-2-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:40:57.000000000 Z
+- name: image
+  description: Go supplementary image libraries
+  package_url: https://pkg.go.dev/golang.org/x/image
+  version: 0.0.0
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:47:29.000000000 Z
+- name: js/dom
+  description: Package dom provides GopherJS bindings for the JavaScript DOM APIs
+  package_url: https://pkg.go.dev/honnef.co/go/js/dom
+  version: 0.0.0
+  open_source: false
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:47:29.000000000 Z
+- name: mobile
+  description: Go on Mobile
+  package_url: https://pkg.go.dev/golang.org/x/mobile
+  version: 0.0.0
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:47:29.000000000 Z
+- name: net
+  description: Go supplementary network libraries
+  package_url: https://pkg.go.dev/golang.org/x/net
+  version: 0.0.0
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:40:57.000000000 Z
+- name: sys
+  description: Go packages for low-level interaction with the operating system
+  package_url: https://pkg.go.dev/golang.org/x/sys
+  version: 0.0.0
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:40:57.000000000 Z
+- name: text
+  description: Go text processing support
+  package_url: https://pkg.go.dev/golang.org/x/text
+  version: 0.0.0
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/sarumaj/water-maker/blob/main/go.sum
+  detection_source: go.mod
+  last_updated_by: Dawid Ciepiela
+  last_updated_on: 2023-09-04 07:47:29.000000000 Z
