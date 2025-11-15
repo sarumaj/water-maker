@@ -3,7 +3,7 @@ module github.com/sarumaj/water-maker
 go 1.21
 
 require (
-	fyne.io/fyne/v2 v2.7.0
+	fyne.io/fyne/v2 v2.7.1
 	github.com/httpsOmkar/graphics-go v0.0.0-20191104103446-7a2f2ed96a63
 )
 
