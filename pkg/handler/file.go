@@ -34,7 +34,11 @@ func (file *File) SetWatermark() {
 
 	file.Base = fmt.Sprintf("%s_watermarked.%s", file.Base, file.Ext)
 	file.FullPath = filepath.Join(file.Dir, file.Base)
-	if err := encodeImage(file.FullPath, drawWatermark(img, watermark)); err != nil {
+	watermarked, err := drawWatermark(img, watermark)
+	if err != nil {
+		panic(err)
+	}
+	if err := encodeImage(file.FullPath, watermarked); err != nil {
 		panic(err)
 	}
 }
@@ -49,7 +53,7 @@ func decodeImage(path string, fsys fs.FS) (img image.Image, err error) {
 	if err != nil {
 		return nil, err
 	}
-	defer imgb.Close()
+	defer func() { _ = imgb.Close() }()
 
 	switch filepath.Ext(path) {
 	case ".png":
@@ -76,39 +80,52 @@ func decodeWatermark() (wm image.Image, err error) {
 	return decodeImage("images/watermark.png", data.Fs)
 }
 
-func drawWatermark(img, watermark image.Image) image.Image {
+func drawWatermark(img, watermark image.Image) (image.Image, error) {
 	if s := img.Bounds().Size(); s.Y > s.X {
 		dstImage := image.NewRGBA(image.Rect(0, 0, watermark.Bounds().Dy(), watermark.Bounds().Dx()))
-		graphics.Rotate(dstImage, watermark, &graphics.RotateOptions{Angle: 3.0 * math.Pi / 2.0})
+		if err := graphics.Rotate(dstImage, watermark, &graphics.RotateOptions{Angle: 3.0 * math.Pi / 2.0}); err != nil {
+			return nil, err
+		}
 		watermark = dstImage
 	}
 	dstImage := image.NewRGBA(img.Bounds())
-	graphics.Scale(dstImage, watermark)
+	if err := graphics.Scale(dstImage, watermark); err != nil {
+		return nil, err
+	}
 	watermark = dstImage
 
 	m := image.NewRGBA(img.Bounds())
 	draw.Draw(m, img.Bounds(), img, image.Point{}, draw.Src)
 	draw.Draw(m, watermark.Bounds(), watermark, image.Point{}, draw.Over)
-	return m
+	return m, nil
 }
 
-func encodeImage(path string, img image.Image) error {
+func encodeImage(path string, img image.Image) (err error) {
+	var encode func(io.Writer, image.Image) error
+	switch filepath.Ext(path) {
+	case ".jpeg", ".jpg":
+		encode = func(w io.Writer, m image.Image) error {
+			return jpeg.Encode(w, m, &jpeg.Options{Quality: jpeg.DefaultQuality})
+		}
+	case ".png":
+		encode = (&png.Encoder{CompressionLevel: png.BestCompression}).Encode
+	case ".gif":
+		encode = func(w io.Writer, m image.Image) error {
+			return gif.Encode(w, m, &gif.Options{NumColors: 256, Quantizer: nil, Drawer: nil})
+		}
+	default:
+		return fmt.Errorf("unsupported image format: %s", path)
+	}
+
 	imgw, err := os.Create(path)
 	if err != nil {
 		return err
 	}
-	defer imgw.Close()
+	defer func() {
+		if cerr := imgw.Close(); err == nil {
+			err = cerr
+		}
+	}()
 
-	switch filepath.Ext(path) {
-	case "jpeg", "jpg":
-		jpeg.Encode(imgw, img, &jpeg.Options{Quality: jpeg.DefaultQuality})
-	case "png":
-		(&png.Encoder{CompressionLevel: png.BestCompression}).Encode(imgw, img)
-	case "gif":
-		gif.Encode(imgw, img, &gif.Options{NumColors: 256, Quantizer: nil, Drawer: nil})
-	default:
-		return fmt.Errorf("unsupported image format")
-	}
-
-	return nil
+	return encode(imgw, img)
 }

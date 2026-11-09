@@ -56,7 +56,9 @@ func (h *Handler) Browse(uri fyne.ListableURI, _ error) {
 
 func (h *Handler) Log(msg string) {
 	now := time.Now()
-	h.Messages.Append(now.Format("2006-01-02 15:04:05") + ": " + msg)
+	if err := h.Messages.Append(now.Format("2006-01-02 15:04:05") + ": " + msg); err != nil {
+		fyne.LogError("Could not show the message: "+msg, err)
+	}
 }
 
 func (h *Handler) Clear() {
