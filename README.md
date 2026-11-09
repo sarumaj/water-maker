@@ -1,5 +1,4 @@
-[![Go Report](https://goreportcard.com/badge/github.com/sarumaj/water-maker)](https://goreportcard.com/report/github.com/sarumaj/water-maker)
-[![Maintainability](https://img.shields.io/codeclimate/maintainability-percentage/sarumaj/water-maker.svg)](https://codeclimate.com/github/sarumaj/water-maker/maintainability)
+[![Maintainability](https://qlty.sh/gh/sarumaj/projects/water-maker/maintainability.svg)](https://qlty.sh/gh/sarumaj/projects/water-maker)
 
 ----
 
